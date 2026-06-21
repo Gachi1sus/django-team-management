@@ -1,0 +1,46 @@
+<h1>{% if form.instance.pk %}Редактировать{% else %}Добавить{% endif %} участника</h1>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <!-- Name -->
+    <div>
+        {{ form.name.label_tag }}
+        {{ form.name }}
+        {% for error in form.name.errors %}
+            <p style="color:red">{{ error }}</p>
+        {% endfor %}
+    </div>
+
+    <!-- Role -->
+    <div>
+        {{ form.role.label_tag }}
+        {{ form.role }}
+        {% for error in form.role.errors %}
+            <p style="color:red">{{ error }}</p>
+        {% endfor %}
+    </div>
+
+    <!-- Bio -->
+    <div>
+        {{ form.bio.label_tag }}
+        {{ form.bio }}
+        {% for error in form.bio.errors %}
+            <p style="color:red">{{ error }}</p>
+        {% endfor %}
+    </div>
+
+    <!-- Faction -->
+    <div>
+        {{ form.faction.label_tag }}
+        {{ form.faction }}
+        {% for error in form.faction.errors %}
+            <p style="color:red">{{ error }}</p>
+        {% endfor %}
+    </div>
+
+    <button type="submit">{% if form.instance.pk %}Сохранить{% else %}Создать{% endif %}</button>
+</form>
+
+<br>
+<a href="{% url 'members_list' %}">Назад к списку участников</a>

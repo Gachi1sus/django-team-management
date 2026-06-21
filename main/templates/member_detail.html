@@ -1,0 +1,22 @@
+<h1>{{ member.name }}</h1>
+
+<p><b>Роль:</b> {{ member.get_role_display }}</p>
+
+<p><b>Фракция:</b>
+    {% if member.faction %}
+        <a href="{% url 'faction_detail' member.faction.id %}">{{ member.faction.name }}</a>
+    {% else %}
+        Без фракции
+    {% endif %}
+</p>
+
+<p><b>Описание:</b> {{ member.bio }}</p>
+
+<!-- Кнопки редактирования и удаления -->
+{% if user.is_authenticated %}
+    <a href="{% url 'edit_member' member.id %}">Редактировать</a> |
+    <a href="{% url 'delete_member' member.id %}">Удалить</a>
+{% endif %}
+
+<br><br>
+<a href="{% url 'members_list' %}">Назад к списку участников</a>

@@ -1,0 +1,14 @@
+<h1>Вход</h1>
+
+{% if error %}
+    <p>{{ error }}</p>
+{% endif %}
+
+<form method="POST">
+    {% csrf_token %}
+
+    <input type="text" name="username" placeholder="Логин"><br>
+    <input type="password" name="password" placeholder="Пароль"><br>
+
+    <button type="submit">Войти</button>
+</form>

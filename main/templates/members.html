@@ -1,0 +1,22 @@
+<h1>Участники</h1>
+
+<ul>
+{% for member in members %}
+    <li>
+        <a href="{% url 'member_detail' member.id %}">{{ member.name}}</a><b> — {{ member.get_role_display }}</b> <br>
+        {{ member.bio }}
+        <p>Фракция: {{ member.faction.name|default:"Без фракции" }}</p>
+    </li>
+{% endfor %}
+</ul>
+
+{% if user.is_authenticated %}
+    <a href="{% url 'add_member' %}">Добавить участника</a>
+    <br>
+    <a href="{% url 'logout_user' %}">Выйти</a>
+{% else %}
+    <a href="{% url 'login_user' %}">Войти</a>
+{% endif %}
+
+
+

@@ -1,0 +1,10 @@
+<h1>Удаления пользователя</h1>
+
+<p>Вы точно хотите удалить {{member.name}}?</p>
+
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit">Да, удалить</button>
+</form>
+
+<a href="{% url 'members_list' %}">Отмена</a>

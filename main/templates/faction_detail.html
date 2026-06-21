@@ -1,0 +1,17 @@
+<h1>{{ faction.name }}</h1>
+
+<h2>Участники фракции</h2>
+
+{% for member in members %}
+    <p>
+        <a href="{% url 'member_detail' member.id %}">
+            {{ member.name }}
+        </a>
+        — {{ member.get_role_display }}
+    </p>
+{% empty %}
+    <p>Во фракции пока нет участников.</p>
+{% endfor %}
+
+<br>
+<a href="{% url 'members_list' %}">Назад к участникам</a>
