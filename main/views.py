@@ -4,6 +4,9 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import FactionMember, Faction
 from django.contrib.auth.decorators import login_required
 from .forms import MemberForm
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .serializers import FactionMemberSerializer
 
 def members_list(request):
     members = FactionMember.objects.all()
@@ -83,3 +86,42 @@ def faction_detail(request, id):
         'faction': faction,
         'members': members
     })
+
+@api_view(['GET', 'POST'])
+def api_members_list(request):
+
+    if request.method == 'GET':
+        members = FactionMember.objects.all()
+        serializer = FactionMemberSerializer(members, many=True)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        serializer = FactionMemberSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+
+        return Response(serializer.errors)
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def api_member_detail(request, id):
+
+    member = get_object_or_404(FactionMember, id=id)
+
+    if request.method == 'GET':
+        serializer = FactionMemberSerializer(member)
+        return Response(serializer.data)
+
+    elif request.method == 'PUT':
+        serializer = FactionMemberSerializer(member, data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+
+        return Response(serializer.errors)
+
+    elif request.method == 'DELETE':
+        member.delete()
+        return Response({'message': 'Участник удалён'})
